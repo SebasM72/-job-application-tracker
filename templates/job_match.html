@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Job Match - Job Application Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .match-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+
+        .match-card h3 {
+            margin-top: 0;
+        }
+
+        .match-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .match-progress {
+            height: 100%;
+            background-color: #16a34a;
+            border-radius: 10px;
+        }
+
+        .match-percentage {
+            font-size: 22px;
+            font-weight: bold;
+            color: #16a34a;
+        }
+
+        .skill-list {
+            margin-top: 10px;
+        }
+
+        .matching-skills {
+            color: #15803d;
+        }
+
+        .missing-skills {
+            color: #dc2626;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <a href="{{ url_for('home') }}">Dashboard</a>
+            <a href="{{ url_for('companies') }}">Companies</a>
+            <a href="{{ url_for('jobs') }}">Jobs</a>
+            <a href="{{ url_for('applications') }}">Applications</a>
+            <a href="{{ url_for('contacts') }}">Contacts</a>
+            <a href="{{ url_for('job_match') }}">Job Match</a>
+        </nav>
+
+        <header>
+            <h1>Job Match</h1>
+            <p>
+                Find jobs that match your technical skills.
+            </p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Skills Input Form -->
+        <section class="form-section">
+
+            <h2>Enter Your Skills</h2>
+
+            <p>
+                Enter your skills separated by commas.
+            </p>
+
+            <form method="POST"
+                  action="{{ url_for('job_match') }}">
+
+                <label for="skills">Your Skills:</label>
+
+                <input
+                    type="text"
+                    id="skills"
+                    name="skills"
+                    placeholder="Python, SQL, AWS, Linux"
+                    value="{{ skills_input or '' }}"
+                    required
+                >
+
+                <button type="submit">
+                    Find Matching Jobs
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- Job Match Results -->
+        {% if results is not none %}
+
+        <section class="results-section">
+
+            <h2>Matching Jobs</h2>
+
+            {% if results %}
+
+                {% for result in results %}
+
+                <div class="match-card">
+
+                    <h3>
+                        {{ result.job_title }}
+                    </h3>
+
+                    <p>
+                        <strong>Company:</strong>
+                        {{ result.company_name }}
+                    </p>
+
+                    <p>
+                        <strong>Job Type:</strong>
+                        {{ result.job_type or 'Not specified' }}
+                    </p>
+
+                    <p class="match-percentage">
+                        {{ result.match_percentage }}% Match
+                    </p>
+
+                    <!-- Progress Bar -->
+                    <div class="match-bar">
+
+                        <div
+                            class="match-progress"
+                            style="width: {{ result.match_percentage }}%;">
+                        </div>
+
+                    </div>
+
+                    <!-- Matching Skills -->
+                    <div class="skill-list matching-skills">
+
+                        <strong>Matching Skills:</strong>
+
+                        {% if result.matching_skills %}
+
+                            {{ result.matching_skills | join(', ') }}
+
+                        {% else %}
+
+                            None
+
+                        {% endif %}
+
+                    </div>
+
+                    <!-- Missing Skills -->
+                    <div class="skill-list missing-skills">
+
+                        <strong>Missing Skills:</strong>
+
+                        {% if result.missing_skills %}
+
+                            {{ result.missing_skills | join(', ') }}
+
+                        {% else %}
+
+                            None
+
+                        {% endif %}
+
+                    </div>
+
+                    {% if result.posting_url %}
+
+                    <p>
+                        <a href="{{ result.posting_url }}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            View Job Posting
+                        </a>
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    No jobs with required skills were found.
+                    Add jobs with required skills on the Jobs page.
+                </p>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

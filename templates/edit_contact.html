@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Contact - Job Application Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <a href="{{ url_for('home') }}">Dashboard</a>
+            <a href="{{ url_for('companies') }}">Companies</a>
+            <a href="{{ url_for('jobs') }}">Jobs</a>
+            <a href="{{ url_for('contacts') }}">Contacts</a>
+            <a href="/job-match">Job Match</a>
+        </nav>
+
+        <header>
+            <h1>Edit Contact</h1>
+            <p>Update professional contact information.</p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Edit Contact Form -->
+        <section class="form-section">
+
+            <h2>Contact Information</h2>
+
+            <form method="POST"
+                  action="{{ url_for('edit_contact', contact_id=contact.contact_id) }}">
+
+                <label>Company:</label>
+
+                <select name="company_id" required>
+
+                    {% for company in companies %}
+
+                        <option
+                            value="{{ company.company_id }}"
+                            {% if company.company_id == contact.company_id %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ company.company_name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <label>First Name:</label>
+                <input
+                    type="text"
+                    name="first_name"
+                    maxlength="50"
+                    value="{{ contact.first_name }}"
+                    required
+                >
+
+                <label>Last Name:</label>
+                <input
+                    type="text"
+                    name="last_name"
+                    maxlength="50"
+                    value="{{ contact.last_name }}"
+                    required
+                >
+
+                <label>Job Title:</label>
+                <input
+                    type="text"
+                    name="job_title"
+                    maxlength="100"
+                    value="{{ contact.job_title or '' }}"
+                >
+
+                <label>Email:</label>
+                <input
+                    type="email"
+                    name="email"
+                    maxlength="100"
+                    value="{{ contact.email or '' }}"
+                >
+
+                <label>Phone Number:</label>
+                <input
+                    type="tel"
+                    name="phone"
+                    maxlength="20"
+                    value="{{ contact.phone or '' }}"
+                >
+
+                <label>LinkedIn Profile URL:</label>
+                <input
+                    type="url"
+                    name="linkedin_url"
+                    maxlength="200"
+                    value="{{ contact.linkedin_url or '' }}"
+                >
+
+                <label>Notes:</label>
+                <textarea
+                    name="notes"
+                    rows="3"
+                >{{ contact.notes or '' }}</textarea>
+
+                <button type="submit">
+                    Save Changes
+                </button>
+
+                <a href="{{ url_for('contacts') }}"
+                   class="reset-button">
+                    Cancel
+                </a>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

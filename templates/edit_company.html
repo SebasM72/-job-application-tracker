@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Company - Job Application Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <a href="{{ url_for('home') }}">Dashboard</a>
+            <a href="{{ url_for('companies') }}">Companies</a>
+            <a href="/jobs">Jobs</a>
+            <a href="/applications">Applications</a>
+            <a href="/contacts">Contacts</a>
+            <a href="/job-match">Job Match</a>
+        </nav>
+
+        <header>
+            <h1>Edit Company</h1>
+            <p>Update the information for this company.</p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Edit Company Form -->
+        <section class="form-section">
+
+            <h2>Company Information</h2>
+
+            <form method="POST"
+                  action="{{ url_for('edit_company', company_id=company.company_id) }}">
+
+                <label>Company Name:</label>
+                <input
+                    type="text"
+                    name="company_name"
+                    value="{{ company.company_name }}"
+                    maxlength="100"
+                    required
+                >
+
+                <label>Industry:</label>
+                <input
+                    type="text"
+                    name="industry"
+                    value="{{ company.industry or '' }}"
+                    maxlength="50"
+                >
+
+                <label>Website:</label>
+                <input
+                    type="text"
+                    name="website"
+                    value="{{ company.website or '' }}"
+                    maxlength="200"
+                >
+
+                <label>City:</label>
+                <input
+                    type="text"
+                    name="city"
+                    value="{{ company.city or '' }}"
+                    maxlength="50"
+                >
+
+                <label>State:</label>
+                <input
+                    type="text"
+                    name="state"
+                    value="{{ company.state or '' }}"
+                    maxlength="50"
+                >
+
+                <label>Notes:</label>
+                <textarea name="notes">{{ company.notes or '' }}</textarea>
+
+                <button type="submit">Save Changes</button>
+
+                <a href="{{ url_for('companies') }}"
+                   class="reset-button">
+                    Cancel
+                </a>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

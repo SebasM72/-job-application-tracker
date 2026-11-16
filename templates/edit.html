@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Application - Job Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>My Job Application Tracker</h1>
+            <p>Update your job application information.</p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Edit Application Form -->
+        <section class="form-section">
+
+            <h2>Edit Job Application</h2>
+
+            <form
+                method="POST"
+                action="{{ url_for('edit', application_id=application.application_id) }}">
+
+                <label>Company Name:</label>
+
+                <input
+                    type="text"
+                    name="company_name"
+                    value="{{ application.company_name }}"
+                    required
+                >
+
+                <label>Job Title:</label>
+
+                <input
+                    type="text"
+                    name="job_title"
+                    value="{{ application.job_title }}"
+                    required
+                >
+
+                <label>Application Date:</label>
+
+                <input
+                    type="date"
+                    name="application_date"
+                    value="{{ application.application_date or '' }}"
+                    required
+                >
+
+                <label>Application Status:</label>
+
+                <select name="status" required>
+
+                    {% for item in statuses %}
+
+                        {% if application.status == item %}
+                            <option value="{{ item }}" selected>{{ item }}</option>
+                        {% else %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endif %}
+
+                    {% endfor %}
+
+                </select>
+
+                <button type="submit">Save Changes</button>
+
+                <a href="{{ url_for('home') }}" class="cancel-button">
+                    Cancel
+                </a>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

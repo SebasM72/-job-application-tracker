@@ -1,0 +1,380 @@
+
+/* General Page Styling */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f6fb;
+    color: #243247;
+}
+
+.container {
+    max-width: 1150px;
+    margin: 0 auto;
+}
+
+/* Navigation Bar */
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+    background-color: #1e3a5f;
+    border-radius: 10px;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.main-nav a:hover {
+    background-color: #315a88;
+}
+
+/* Header */
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    color: #1e3a5f;
+}
+
+header p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Dashboard Statistics */
+
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card h3 {
+    margin: 0 0 12px;
+    color: #64748b;
+    font-size: 15px;
+}
+
+.stat-card h2 {
+    margin: 0;
+    color: #1e3a5f;
+    font-size: 32px;
+}
+
+/* Forms and Sections */
+
+.form-section,
+.applications-section {
+    background-color: white;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.form-section h2,
+.applications-section h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #1e3a5f;
+}
+
+.form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+    font-family: inherit;
+    background-color: white;
+    color: #243247;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Buttons */
+
+button,
+.reset-button,
+.edit-button {
+    display: inline-block;
+    padding: 11px 17px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button {
+    background-color: #2563eb;
+    color: white;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+.reset-button {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.reset-button:hover {
+    background-color: #cbd5e1;
+}
+
+.edit-button {
+    background-color: #e0ecff;
+    color: #1d4ed8;
+}
+
+.edit-button:hover {
+    background-color: #c7ddff;
+}
+
+.delete-button {
+    background-color: #dc2626;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #b91c1c;
+}
+
+/* Search and Filter */
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.filter-form input {
+    flex: 2;
+    min-width: 200px;
+}
+
+.filter-form select {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Applications Table */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+thead {
+    background-color: #eef3fa;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    color: #334155;
+    font-size: 14px;
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.actions form {
+    margin: 0;
+}
+
+/* Status Labels */
+
+.status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: #e2e8f0;
+    color: #334155;
+}
+
+.status.applied {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status.interview {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status.accepted,
+.status.offer {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status.rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status.screening {
+    background-color: #ede9fe;
+    color: #6d28d9;
+}
+
+.status.withdrawn {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+/* Flash Messages */
+
+.alert {
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.alert.success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.alert.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Responsive Design */
+
+@media (max-width: 900px) {
+    .statistics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .main-nav {
+        gap: 5px;
+    }
+
+    .main-nav a {
+        padding: 9px 10px;
+        font-size: 13px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    .statistics {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-section,
+    .applications-section {
+        padding: 20px 15px;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-form input,
+    .filter-form select,
+    .filter-form button,
+    .filter-form .reset-button {
+        width: 100%;
+    }
+
+    .filter-form .reset-button {
+        text-align: center;
+    }
+}
+
+

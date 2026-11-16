@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contacts - Job Application Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <a href="{{ url_for('home') }}">Dashboard</a>
+            <a href="{{ url_for('companies') }}">Companies</a>
+            <a href="{{ url_for('jobs') }}">Jobs</a>
+            <a href="/applications">Applications</a>
+            <a href="/contacts">Contacts</a>
+            <a href="/job-match">Job Match</a>
+        </nav>
+
+        <header>
+            <h1>Contacts</h1>
+            <p>Manage recruiters, hiring managers, and professional connections.</p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Add Contact Form -->
+        <section class="form-section">
+
+            <h2>Add a Contact</h2>
+
+            <form method="POST"
+                  action="{{ url_for('contacts') }}">
+
+                <label>Company:</label>
+                <select name="company_id" required>
+                    <option value="">Select a Company</option>
+
+                    {% for company in companies %}
+                        <option value="{{ company.company_id }}">
+                            {{ company.company_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <label>First Name:</label>
+                <input
+                    type="text"
+                    name="first_name"
+                    maxlength="50"
+                    required
+                >
+
+                <label>Last Name:</label>
+                <input
+                    type="text"
+                    name="last_name"
+                    maxlength="50"
+                    required
+                >
+
+                <label>Job Title:</label>
+                <input
+                    type="text"
+                    name="job_title"
+                    maxlength="100"
+                    placeholder="Recruiter, Hiring Manager, etc."
+                >
+
+                <label>Email:</label>
+                <input
+                    type="email"
+                    name="email"
+                    maxlength="100"
+                >
+
+                <label>Phone Number:</label>
+                <input
+                    type="tel"
+                    name="phone"
+                    maxlength="20"
+                >
+
+                <label>LinkedIn Profile URL:</label>
+                <input
+                    type="url"
+                    name="linkedin_url"
+                    maxlength="200"
+                >
+
+                <label>Notes:</label>
+                <textarea
+                    name="notes"
+                    rows="3"
+                    placeholder="Additional information about this contact"
+                ></textarea>
+
+                <button type="submit">Add Contact</button>
+
+            </form>
+
+        </section>
+
+        <!-- Contacts Table -->
+        <section class="table-section">
+
+            <h2>All Contacts</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Job Title</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for contact in contacts %}
+
+                    <tr>
+                        <td>
+                            {{ contact.first_name }}
+                            {{ contact.last_name }}
+                        </td>
+
+                        <td>{{ contact.company_name }}</td>
+
+                        <td>{{ contact.job_title or '—' }}</td>
+
+                        <td>
+                            {% if contact.email %}
+                                <a href="mailto:{{ contact.email }}">
+                                    {{ contact.email }}
+                                </a>
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td>{{ contact.phone or '—' }}</td>
+
+                        <td>
+                            <a class="edit-button"
+                               href="{{ url_for('edit_contact', contact_id=contact.contact_id) }}">
+                                Edit
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_contact', contact_id=contact.contact_id) }}"
+                                onsubmit="return confirm('Delete this contact?');"
+                                style="display:inline;"
+                            >
+                                <button
+                                    type="submit"
+                                    class="delete-button">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No contacts found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </div>
+
+</body>
+</html>
